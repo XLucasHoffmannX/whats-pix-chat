@@ -4,74 +4,108 @@ const btnSend = document.querySelector('#send');
 const chatBox = document.querySelector('.dis_main');
 const displayMsg = document.querySelector('.message');
 const userEntry = document.querySelector('.userEntry');
+const userInput = document.querySelector('#userChat');
 
-let name;
-do {
-    name = prompt('Insira um nome de usuário')
-} while (!name)
+const displayContent = document.querySelector('.display');
+const userNameDisplay = document.querySelector('.userName_display')
+const loaderDisplay = document.querySelector('.load');
+const formUser = document.querySelector('.userChatForm');
+const entryBtn = document.querySelector('#entry');
+const userChatInput = document.querySelector('#userChat');
+const errorMessage = document.querySelector('.erroUser');
 
-document.querySelector('.username').textContent = name;
 
-msgText.focus();
-
-btnSend.addEventListener('click', (e) => {
-    e.preventDefault();
-    sendMsg(msgText.value);
-    msgText.value = '';
-    msgText.focus();
-    chatBox.scrollTop = chatBox.scrollHeight;
-})
-
-const sendMsg = (message, verify) => {
-    let msg = {
-        user: name,
-        message: message.trim()
-    }
-    if(verify){
-        displayEntry(msg)
-    }else{
-        display(msg, 'you-message')
-    }
-
-    socket.emit('sendMessage', msg)
+function displayNone() {
+    displayContent.style.display = 'none';
+    loaderDisplay.style.display = 'none';
+    errorMessage.style.display = 'none';
 }
 
-socket.on('sendToAll', (msg, user) => {
-    display(msg, 'other-message');
-    chatBox.scrollTop = chatBox.scrollHeight;
-    if (user) {
-        let audio = new Audio('../mp3/ping.mp3')
-        audio.play();
-    }
-})
+displayNone();
 
-const displayEntry = (msg)=>{
-    userEntry.innerHTML = `<span>Você entrou na sala como ${msg.user}!</span>`
-}
+userChatInput.focus();
 
-const display = (msg, type, verify) => {
-    if(verify){
-        displayEntry();
-    }
-    const msgDiv = document.createElement('div');
-    let className = type;
-    msgDiv.classList.add(className, 'message-row');
-    let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    let innerText = `
-        <div class="message-title">
-            <span>${msg.user}</span>
-        </div>
-        <div class="message-text">
-            ${msg.message}
-        </div>
-        <div class="message-time">
-            ${time}
-        </div>
+entryBtn.addEventListener('click', () => {
+    const inputUser = userChatInput.value;
+    if (inputUser.length === 0) {
+        errorMessage.style.display = '';
+        setTimeout(() => { errorMessage.style.display = 'none'; }, 1300)
+    } else {
+        let name = inputUser;
+        formUser.style.display = 'none';
+        loaderDisplay.style.display = '';
+        setTimeout(() => {
+            userNameDisplay.style.display = 'none';
+            displayContent.style.display = 'flex';
+        }, 2000)
+        document.querySelector('.username').textContent = name;
+
+        msgText.focus();
+
+        btnSend.addEventListener('click', (e) => {
+            e.preventDefault();
+            sendMsg(msgText.value);
+            msgText.value = '';
+            msgText.focus();
+            chatBox.scrollTop = chatBox.scrollHeight;
+        })
+
+        const sendMsg = (message, verify) => {
+            let msg = {
+                user: name,
+                message: message.trim()
+            }
+            if (verify) {
+                displayEntry(msg)
+            } else {
+                display(msg, 'you-message')
+            }
+
+            socket.emit('sendMessage', msg)
+        }
+
+        socket.on('sendToAll', (msg, user) => {
+            display(msg, 'other-message');
+            chatBox.scrollTop = chatBox.scrollHeight;
+            if (user) {
+                let audio = new Audio('../mp3/ping.mp3')
+                audio.play();
+            }
+        })
+
+        const displayEntry = (msg) => {
+            userEntry.innerHTML = `<span>Você entrou na sala como ${msg.user}!</span>`
+        }
+
+        const display = (msg, type, verify) => {
+            if (verify) {
+                displayEntry();
+            }
+            const msgDiv = document.createElement('div');
+            let className = type;
+            msgDiv.classList.add(className, 'message-row');
+            let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            let innerText = `
+                <div class="message-title">
+                    <span>${msg.user}</span>
+                </div>
+                <div class="message-text">
+                    ${msg.message}
+                </div>
+                <div class="message-time">
+                    ${time}
+                </div>
         `;
 
-    msgDiv.innerHTML = innerText;
-    displayMsg.appendChild(msgDiv);
-}
+            msgDiv.innerHTML = innerText;
+            displayMsg.appendChild(msgDiv);
+        }
 
-sendMsg('<b style="color: #12554c; background:#00BFA5 "> ---- Entrei na sala ----- </b>', true)
-console.log('atualizado 00:24 de 21 de março de 2021');
+        if (name) {
+            sendMsg(`<b style="color: #12554c; background:#00BFA5 "> ---- Entrei na sala ----- </b>`, true)
+        }
+
+
+        console.log('atualizado 16:54 de 21 de março de 2021');
+    }
+})

@@ -1,38 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600&display=swap');
-
-:root{
-    --principal: #00BFA5; 
-    --gray-back: #D0D6D3;   
+:root {
+    --principal: #00BFA5;
+    --gray-back: #D0D6D3;
 }
 
-*{
+@keyframes loader {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
     background: var(--gray-back);
 }
 
-ul, ol{ list-style: none; }
+ul, ol {
+    list-style: none;
+}
 
-a{text-decoration: none;}
+a {
+    text-decoration: none;
+}
 
-@media(max-width: 700px){
-    .land_display{
+.hidden {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+@media(max-width: 700px) {
+    .land_display, .userName_display {
         flex-direction: column;
     }
-
-    .land_display img{
+    .land_display img, .userName_display img {
         display: none;
     }
-
-    .land_content h2:first-child{font-size: 35px;}
-
-    .land_content span{
+    .land_content h2:first-child {
+        font-size: 35px;
+    }
+    .userName_display h2:first-child {
+        font-size: 26px;
+    }
+    .userName_content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .land_content span, .userName_content span {
         font-size: 14px;
     }
 }

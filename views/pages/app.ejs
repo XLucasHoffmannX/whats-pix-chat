@@ -3,8 +3,8 @@
 
 <head>
     <%- include('../layouts/head') %>
-    <link rel="stylesheet" href="./css/styles/app.css">
-    <title>Chat</title>
+        <link rel="stylesheet" href="./css/styles/app.css">
+        <title>Chat</title>
 </head>
 
 <body>
@@ -25,6 +25,24 @@
             </div>
         </header>
         <main class="chat_main">
+            <div class="userName_display">
+                <div class="userName_displaySecondary">
+                    <div class="userName_content">
+                        <h2>Entrar em uma sala Aleatória</h2>
+                        <span>Desenvolvido por Hoffmann😊</span>
+                        <form class="userChatForm" action="">
+                            <label for="userChat">Insira um nome de usuário:</label>
+                            <input type="text" name="" id="userChat">
+                            <span class="erroUser">Por favor insira um usuário válido!</span>
+                            <div class="userName_open">
+                                <a id="entry" href="#userEntry">Entrar na sala</a>
+                            </div>
+                        </form>
+                        <div class="load"><div class="spin"></div></div>
+                    </div>
+                    <img src="./img/userEntry.svg" alt="">
+                </div>
+            </div>
             <div class="display">
                 <div class="dis_header">
                     <div class="header_info">
