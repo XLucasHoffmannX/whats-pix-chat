@@ -11,10 +11,9 @@ app.set('view engine', 'ejs');
 
 const io = require('socket.io')(http);
 io.on('connection', socket=>{
-    console.log('Socket conectado!')
-
-    socket.on('sendMessage', msg=>{
-        socket.broadcast.emit('sendToAll', msg)
+    let user = true;
+    socket.on('sendMessage', (msg)=>{
+        socket.broadcast.emit('sendToAll', msg, user)
     })
 })
 

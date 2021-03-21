@@ -32,9 +32,13 @@ const sendMsg = message => {
     socket.emit('sendMessage', msg)
 }
 
-socket.on('sendToAll', msg => {
+socket.on('sendToAll', (msg, user)=> {
     display(msg, 'other-message');
     chatBox.scrollTop = chatBox.scrollHeight;
+    if(user){
+        let audio = new Audio('../mp3/ping.mp3')
+        audio.play();
+    }
 })
 
 const display = (msg, type) => {
@@ -58,4 +62,6 @@ const display = (msg, type) => {
     displayMsg.appendChild(msgDiv);
 }
 
-console.log('atualizado 00:22 de 21 de março de 2021')
+console.log('atualizado 00:24 de 21 de março de 2021')
+
+socket.on('users', ()=>{ console.log(users) })
