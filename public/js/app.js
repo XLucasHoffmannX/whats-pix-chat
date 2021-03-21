@@ -39,9 +39,9 @@ entryBtn.addEventListener('click', () => {
             displayContent.style.display = 'flex';
         }, 2000)
         document.querySelector('.username').textContent = name;
-
+        
         msgText.focus();
-
+        
         btnSend.addEventListener('click', (e) => {
             e.preventDefault();
             sendMsg(msgText.value);
@@ -49,12 +49,13 @@ entryBtn.addEventListener('click', () => {
             msgText.focus();
             chatBox.scrollTop = chatBox.scrollHeight;
         })
-
+        
+        let msg = {
+            user: name
+        }
         const sendMsg = (message, verify) => {
-            let msg = {
-                user: name,
-                message: message.trim()
-            }
+            msg.message = message.trim();
+
             if (verify) {
                 displayEntry(msg)
             } else {
@@ -102,9 +103,8 @@ entryBtn.addEventListener('click', () => {
         }
 
         if (name) {
-            sendMsg(`<b style="color: #12554c; background:#00BFA5 "> ---- Entrei na sala ----- </b>`, true)
+            sendMsg(`<b style="color: #12554c; background:#00BFA5 "> 👉 ${msg.user} entrou na sala, de boas vindas 👋👋 ! 👈 </b>`, true)
         }
-
 
         console.log('atualizado 16:54 de 21 de março de 2021');
     }
