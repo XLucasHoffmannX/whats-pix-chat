@@ -1,4 +1,4 @@
-const socket = io.connect('http://localhost:3000');
+const socket = io();
 const msgText = document.querySelector('#msg');
 const btnSend = document.querySelector('#send');
 const chatBox = document.querySelector('.dis_main');
