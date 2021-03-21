@@ -108,6 +108,7 @@
 .dis_main{
     height: 80%;
     background-color: #eee;
+    overflow: auto;
 }
 
 .dis_footer{
