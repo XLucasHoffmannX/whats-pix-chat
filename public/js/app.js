@@ -3,6 +3,7 @@ const msgText = document.querySelector('#msg');
 const btnSend = document.querySelector('#send');
 const chatBox = document.querySelector('.dis_main');
 const displayMsg = document.querySelector('.message');
+const userEntry = document.querySelector('.userEntry');
 
 let name;
 do {
@@ -21,47 +22,56 @@ btnSend.addEventListener('click', (e) => {
     chatBox.scrollTop = chatBox.scrollHeight;
 })
 
-const sendMsg = message => {
+const sendMsg = (message, verify) => {
     let msg = {
         user: name,
         message: message.trim()
     }
-
-    display(msg, 'you-message')
+    if(verify){
+        displayEntry(msg)
+    }else{
+        display(msg, 'you-message')
+    }
 
     socket.emit('sendMessage', msg)
 }
 
-socket.on('sendToAll', (msg, user)=> {
+socket.on('sendToAll', (msg, user) => {
     display(msg, 'other-message');
     chatBox.scrollTop = chatBox.scrollHeight;
-    if(user){
+    if (user) {
         let audio = new Audio('../mp3/ping.mp3')
         audio.play();
     }
 })
 
-const display = (msg, type) => {
+const displayEntry = (msg)=>{
+    userEntry.innerHTML = `<span>Você entrou na sala como ${msg.user}!</span>`
+}
+
+const display = (msg, type, verify) => {
+    if(verify){
+        displayEntry();
+    }
     const msgDiv = document.createElement('div');
     let className = type;
     msgDiv.classList.add(className, 'message-row');
-    let time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});    
+    let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     let innerText = `
-    <div class="message-title">
-        <span>${msg.user}</span>
-    </div>
-    <div class="message-text">
-        ${msg.message}
-    </div>
-    <div class="message-time">
-        ${time}
-    </div>
-    `;
+        <div class="message-title">
+            <span>${msg.user}</span>
+        </div>
+        <div class="message-text">
+            ${msg.message}
+        </div>
+        <div class="message-time">
+            ${time}
+        </div>
+        `;
 
     msgDiv.innerHTML = innerText;
     displayMsg.appendChild(msgDiv);
 }
 
-console.log('atualizado 00:24 de 21 de março de 2021')
-
-socket.on('users', ()=>{ console.log(users) })
+sendMsg('<b style="color: #12554c; background:#00BFA5 "> ---- Entrei na sala ----- </b>', true)
+console.log('atualizado 00:24 de 21 de março de 2021');
