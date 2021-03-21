@@ -57,3 +57,5 @@ const display = (msg, type) => {
     msgDiv.innerHTML = innerText;
     displayMsg.appendChild(msgDiv);
 }
+
+console.log('atualizado 00:12 de 21 de março de 2021')
