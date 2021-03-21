@@ -58,4 +58,4 @@ const display = (msg, type) => {
     displayMsg.appendChild(msgDiv);
 }
 
-console.log('atualizado 00:12 de 21 de março de 2021')
+console.log('atualizado 00:22 de 21 de março de 2021')
