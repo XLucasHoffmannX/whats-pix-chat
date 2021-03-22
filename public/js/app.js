@@ -13,7 +13,7 @@ const formUser = document.querySelector('.userChatForm');
 const entryBtn = document.querySelector('#entry');
 const userChatInput = document.querySelector('#userChat');
 const errorMessage = document.querySelector('.erroUser');
-
+const usersGroup = document.querySelector('.users_group');
 
 function displayNone() {
     displayContent.style.display = 'none';
@@ -31,6 +31,7 @@ entryBtn.addEventListener('click', () => {
         errorMessage.style.display = '';
         setTimeout(() => { errorMessage.style.display = 'none'; }, 1300)
     } else {
+
         let name = inputUser;
         formUser.style.display = 'none';
         loaderDisplay.style.display = '';
@@ -39,20 +40,31 @@ entryBtn.addEventListener('click', () => {
             displayContent.style.display = 'flex';
         }, 2000)
         document.querySelector('.username').textContent = name;
-        
+
         msgText.focus();
-        
+
         btnSend.addEventListener('click', (e) => {
             e.preventDefault();
-            sendMsg(msgText.value);
+            const msgTextValue = msgText.value;
+            if (msgTextValue.length > 0) {
+                sendMsg(msgText.value);
+            }
             msgText.value = '';
             msgText.focus();
             chatBox.scrollTop = chatBox.scrollHeight;
         })
-        
+
+        socket.on('usersA', users => {
+            console.log(users)
+            for (users of user) {
+                console.log(user)
+            }
+        })
+
         let msg = {
             user: name
         }
+
         const sendMsg = (message, verify) => {
             msg.message = message.trim();
 
@@ -65,6 +77,7 @@ entryBtn.addEventListener('click', () => {
             socket.emit('sendMessage', msg)
         }
 
+        let cont = 0;
         socket.on('sendToAll', (msg, user) => {
             display(msg, 'other-message');
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -73,6 +86,7 @@ entryBtn.addEventListener('click', () => {
                 audio.play();
             }
         })
+
 
         const displayEntry = (msg) => {
             userEntry.innerHTML = `<span>Você entrou na sala como ${msg.user}!</span>`
@@ -107,5 +121,6 @@ entryBtn.addEventListener('click', () => {
         }
 
         console.log('atualizado 16:54 de 21 de março de 2021');
+        usersGroup.innerText += `(${msg.user})`;
     }
 })

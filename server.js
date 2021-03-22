@@ -10,10 +10,12 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 const io = require('socket.io')(http);
+
 io.on('connection', socket=>{
     let user = true;
+
     socket.on('sendMessage', (msg)=>{
-        socket.broadcast.emit('sendToAll', msg, user)
+        socket.broadcast.emit('sendToAll', msg, user);
     })
 })
 
