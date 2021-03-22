@@ -10,6 +10,6 @@
 
 - **Install the dependencies `npm i`**
 - **At the terminal start `npm start`** or `npm run dev`
-- 
+
 ## Demo
 - 👉 https://chat-whats.herokuapp.com/
